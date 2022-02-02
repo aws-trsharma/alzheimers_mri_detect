@@ -4,11 +4,10 @@ diagonal_coefficients = [];
 approx_coefficients = [];
 myDir = uigetdir; %gets directory
 myFiles = dir(fullfile(myDir,'*.dcm')); %gets all wav files in struct
-for k = 1:102 %length(myFiles)  ad = 411, cn = 410
+for k = 1:808 %ad = 383, cn = 424(training dataset)
   baseFileName = myFiles(k).name;
   fullFileName = fullfile(myDir, baseFileName);
-  input = dicomread(fullFileName);
-  input_size = size(input)
+  input = dicomread(fullFileName); %Reads in MRI image
   
   if size(input) ~= [256 256]
       k = k - 1;
@@ -31,9 +30,9 @@ for k = 1:102 %length(myFiles)  ad = 411, cn = 410
     size_level = size(D4_1D);
     disp('new term');
     if k == 1
-        writematrix(D4_1D, 'D4_fixed_test.csv')
+        writematrix(D4_1D, 'D4_train.csv')
     else
-        writematrix(D4_1D, 'D4_fixed_test.csv', 'WriteMode', 'append')
+        writematrix(D4_1D, 'D4_train.csv', 'WriteMode', 'append')
     end
   end     
 %perform dwt within here and store coefficients within array for later use
@@ -71,7 +70,7 @@ for k = 1:101 %length(myFiles)  ad = 102, cn = 101 for testing
     disp('new term');
    
 
-    writematrix(D4_1D, 'D4_fixed_test.csv', 'WriteMode', 'append')
+    writematrix(D4_1D, 'D4_test.csv', 'WriteMode', 'append')
   end
      
 %perform dwt within here and store coefficients within array for later use
